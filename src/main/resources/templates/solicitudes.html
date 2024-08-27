@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Solicitudes</title>
+</head>
+<body>
+<h1>Solicitudes</h1>
+<form action="/crear" method="post">
+    <input type="text" name="descripcion" placeholder="Descripción de la solicitud" required>
+    <button type="submit">Crear Solicitud</button>
+</form>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="solicitud : ${solicitudes}">
+        <td th:text="${solicitud.id}"></td>
+        <td th:text="${solicitud.descripcion}"></td>
+        <td th:text="${solicitud.estado}"></td>
+        <td>
+            <div th:if="${solicitud.estado == 'Pendiente'}">
+                <form action="/aprobar" method="post" style="display:inline;">
+                    <input type="hidden" name="id" th:value="${solicitud.id}">
+                    <button type="submit">Aprobar</button>
+                </form>
+                <form action="/rechazar" method="post" style="display:inline;">
+                    <input type="hidden" name="id" th:value="${solicitud.id}">
+                    <button type="submit">Rechazar</button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
